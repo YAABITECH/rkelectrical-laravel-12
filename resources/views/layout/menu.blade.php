@@ -31,12 +31,12 @@
             <nav id="navbar" class="nav-menu navbar">
                 <ul>
                     <li><a href="/" class="nav-link scrollto"><span><i class="fa fa-home" aria-hidden="true"></i></span> <span>Home</span></a></li>
-                    <!-- <li><a href="/course/" class="nav-link scrollto"><span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span> <span>Course</span></a></li> -->
-                    <li><a href="/practice/" class="nav-link scrollto"><span><i class="fa fa-book" aria-hidden="true"></i></span> <span>Practice</span></a></li>
-                    <!-- <li><a href="/test-series/" class="nav-link scrollto"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span> <span>Test Series</span></a></li> -->
+                    {{-- <li><a href="/course/" class="nav-link scrollto"><span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span> <span>Course</span></a></li> --}}
+                    {{-- <li><a href="/practice/" class="nav-link scrollto"><span><i class="fa fa-book" aria-hidden="true"></i></span> <span>Practice</span></a></li> --}}
+                    <li><a href="/test/series/" class="nav-link scrollto"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span> <span>Test Series</span></a></li>
                     <li><a href="/about/" class="nav-link scrollto"><span><i class="fa fa-user"></i></span> <span>About</span></a></li>
                     <li><a href="/contact/" class="nav-link scrollto"><span><i class="fa fa-envelope"></i></span> <span>Contact</span></a></li>
-                    <!-- <li><a href="/blog/" class="nav-link scrollto"><span><i class="fa fa-newspaper-o"></i></span> <span>Blog</span></a></li> -->
+                    <li><a href="/blog/" class="nav-link scrollto"><span><i class="fa fa-newspaper-o"></i></span> <span>Blog</span></a></li>
                 </ul>
             </nav>
         </div>

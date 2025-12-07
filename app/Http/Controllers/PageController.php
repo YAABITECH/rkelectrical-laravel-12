@@ -13,8 +13,6 @@ class PageController extends Controller
     public function home()
     {
         $testimonials = Testimonial::limit(3)->get();
-        // $subjects = PracticeSubject::where('status','public')->orderBy('priority','asc')->limit(3)->get();
-        // $courses=Course::limit(3)->get();
         return view('page.home',compact('testimonials'));
     }
     public function about()

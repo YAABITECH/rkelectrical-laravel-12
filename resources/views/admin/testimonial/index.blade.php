@@ -48,7 +48,7 @@
                             <tr>
                                 <td>{{ $s_no++ }}</td>
                                 <td>{{$testimonial->name}}</td>
-                                <td><img class="img img-fluid rounded-circle" src="/image/testimonial/thumbs/{{$testimonial->photo}}" style="width:10%; max-width:150px;" alt="{{$testimonial->name}} photo"></td>
+                                <td><img class="img img-fluid rounded-circle" src="/image/testimonial/thumb/{{$testimonial->photo}}" style="width:10%; max-width:150px;" alt="{{$testimonial->name}} photo"></td>
                                 <td>{{$testimonial->star}}</td>
                                 <td class="text-center">
                                     <a href="{{ route('admin.testimonial.edit', $testimonial->id) }}" class="btn btn-success btn-sm"><i class="fa-solid fa-edit"></i></a>

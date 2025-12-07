@@ -45,7 +45,7 @@
             </div>
             <div class="py-3">
                 <label class="form-label">Previous Image</label><br>
-                <img src="{{URL::asset('/image/testimonial/thumbs/'.$testimonial->photo)}}" class="img-fluid rounded" alt="" style="max-width:150px">
+                <img src="{{URL::asset('/image/testimonial/thumb/'.$testimonial->photo)}}" class="img-fluid rounded" alt="" style="max-width:150px">
             </div>
              <div class="form-group py-3">
                 <label for="photo" class="form-label">Update Image </label>

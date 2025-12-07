@@ -111,56 +111,6 @@
             </div>
         </div>
     </section>
-    @if($subjects->count())
-        <section class="bg-light py-5">
-            <div class="container">
-                <h4 class="text-center text-primary">Subjects</h4>
-                <div class="row mt-3">
-                    @foreach($subjects as $subject)
-                        <div class="col-12 col-md-4 mt-3 subjectDiv">
-                            <a href="{{route('practice.subject')}}" class="text-decoration-none">
-                            <div class="card w-100 border-0 d-flex justify-content-end align-items-center">
-                    <img src="/image/practice/subject/{{$subject->image}}" alt="{{ $subject->name }}" class="w-100" >
-                    <div class="overlay">
-                        <p class="text-center">{{ $subject->name }}</p>
-                    </div>
-                </div>
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="text-center mt-4"  id="subjectBtn">
-                    <a href="{{route('practice.subject')}}" class="btn btn-primary">View All Subjects</a>
-                </div>
-            </div>
-        </section>
-    @endif
-    <!-- <section class="section bg-white py-3 shadow-sm">
-        <div class="container">
-            <div class="row">
-                <h4 class="text-primary h4 text-center">Courses</h4>
-                <div class="row">
-                    @foreach($courses as $course )
-                    <div class="col-12 col-md-4 mt-3">
-                        <a href="{{route('course.detail',['url'=>$course->url])}}" class="text-decoration-none">
-                            <div class="card rounded-5 " style="box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;">
-                                <div class="card-header py-3 bg-white">
-                                    <h6 class="card-title text-center mb-0">{{$course->title}} <span ><a href="{{route('course.detail',['url'=>$course->url])}}" class="ps-5 text-end"><i class="fa-solid fa-circle-chevron-right fs-5 "></i></a></span></h6>
-                                </div>
-                                <div class="card-body p-0">
-                                    <img src="/image/course/{{$course->photo}}" class="card-img-bottom rounded-bottom" alt="{{$course->title}}">
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    @endforeach
-                </div>
-                <div class="text-center mt-4"  id="subjectBtn">
-                    <a href="{{route('course.index')}}" class="btn btn-primary">View All Course</a>
-                </div>
-            </div>
-        </div>
-    </section> -->
     @if($testimonials->count())
         <section class="bg-white py-5">
             <div class="container">
