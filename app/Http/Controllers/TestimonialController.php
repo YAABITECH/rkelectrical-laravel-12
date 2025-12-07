@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Testimonial;
+use App\Traits\FileUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class TestimonialController extends Controller
 {
+    use FileUploadTrait;
     public function testimonial_index()
     {
         $testimonials = Testimonial::get();
@@ -94,19 +96,19 @@ class TestimonialController extends Controller
         $storeData = $request->only(['name','content','star']);
         if($request->hasFile('photo'))
         {
-            $image = $request->file('photo');
-            $extension = $image->getClientOriginalExtension();
-            $fileName ='-img'.uniqid().'.'.$extension;
-            $img = Image::make($image->getRealPath());
-            $img->resize(900, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path('image/testimonial/'.$fileName));
-            $img->resize(300, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path('image/testimonial/thumbs/'.$fileName));
-            $storeData['photo'] = $fileName;
+            $metadata = [
+                'prefix' => 'student-',
+                'sizes' => [
+                    ['width' => 900, 'path' => ''],
+                    ['width' => 100, 'path' => 'thumb/']
+                ],
+            ];
+            $fileName = $this->handleFileUpload($request, 'photo', 'image/testimonial/', 'image', $metadata);
+            if ($fileName) {
+                $storeData['photo'] = $fileName;
+            } else {
+                return back()->with('error', 'File upload error')->withInput();
+            }
         }
         $testimonial = Testimonial::create($storeData);
         if($testimonial)
@@ -149,29 +151,20 @@ class TestimonialController extends Controller
         $updateData =$request->only(['name','content','star']);
         if($request->hasFile('photo'))
         {
-            $image = $request->file('photo');
-            $extension = $image->getClientOriginalExtension();
-            $fileName ='img'.uniqid().'.'.$extension;
-            $img = Image::make($image->getRealPath());
-            $img->resize(900, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path('image/testimonial/'.$fileName));
-            $img->resize(300, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save(public_path('image/testimonial/thumbs/'.$fileName));
-            $updateData['photo'] = $fileName;
-            $oldname=$testimonial->image;
-            $oldimage=public_path('image/testimonial/'.$oldname);
-            $oldthumb=public_path('image/testimonial/thumbs/'.$oldname);
-            if(!empty($oldname) && file_exists($oldimage))
-            {
-                unlink($oldimage);
-            }
-            if(!empty($oldname) && file_exists($oldthumb))
-            {
-                unlink($oldthumb);
+            $oldname=$testimonial->photo;
+            $metadata = [
+                'prefix' => 'student-',
+                'sizes' => [
+                    ['width' => 900, 'path' => ''],
+                    ['width' => 100, 'path' => 'thumb/']
+                ],
+                'deletefile' => $oldname,
+            ];
+            $fileName = $this->handleFileUpload($request, 'photo', 'image/testimonial/', 'image', $metadata);
+            if ($fileName) {
+                $updateData['photo'] = $fileName;
+            } else {
+                return back()->with('error', 'File upload error')->withInput();
             }
         }
         $testimonial = Testimonial::whereId($id)->update($updateData);
