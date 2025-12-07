@@ -1,0 +1,154 @@
+#mcont
+{
+  transition: all 0.2s linear;
+}
+.clvid-inv
+{
+  padding:56.25% 0 0 0;
+  position:relative;
+}
+.clvid-inv2
+{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color:#333333;
+}
+.clvid-inv3
+{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:100%;
+  text-align:center;
+  color:#ffffff;
+  font-size:1.2rem;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+main
+{
+  width:100%;
+  display:block;
+}
+.crsnavlogo
+{
+  display: inline-block;
+  font-size: 2.1rem;
+  vertical-align: top;
+}
+@media only screen and (min-width: 601px) {
+  main
+  {
+    padding-left:300px;
+  }
+}
+#befbtn, #nxtbtn {
+  color: #6a1b9a;
+  border: 2px solid #6a1b9a;
+  box-sizing:content-box;
+  height:2rem;
+  line-height:2rem;
+}
+#befbtn:hover, #nxtbtn:hover {
+  background-color: #6a1b9a !important;
+  color:#ffffff !important;
+}
+.clvid-def {
+  padding:56.25% 0 0 0;
+  width: 100%;
+  animation: vidshimmer 1s infinite;
+  background: linear-gradient(to right, #e6e6e6 0%, #cccccc 25%, #e6e6e6 50%, #cccccc 75%, #e6e6e6 100%);
+  background-size: 1000px 100%;
+}
+.clvid-stk
+{
+  height: 15px;
+  background: #777;
+  margin-top: 20px;
+  animation: vidshimmer 1s infinite;
+  background: linear-gradient(to right, #e6e6e6 0%, #cccccc 25%, #e6e6e6 50%, #cccccc 75%, #e6e6e6 100%);
+  background-size: 1000px 100%;
+}
+.clvid-stk.title
+{
+  margin:30px auto 10px auto;
+  width:60%;
+  line-height:2rem;
+  height:20px;
+}
+.clvid-stk.full
+{
+  width:100%;
+}
+.col .clvid-stk.full
+{
+  margin-top:5px;
+  margin-bottom:15px;
+}
+.clvid-stk.bknxtrt
+{
+  display:inline-block;
+  width:20%;
+}
+@keyframes vidshimmer {
+0% {
+  background-position: 0px 0;
+}
+100% {
+  background-position: 400px 0;
+}
+}
+.sidenav.csidenav-fixed {
+  left: 0;
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+  position: fixed;
+}
+
+.sidenav.csidenav-fixed.right-aligned {
+  right: 0;
+  left: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .sidenav.csidenav-fixed {
+    -webkit-transform: translateX(-105%);
+            transform: translateX(-105%);
+  }
+  .sidenav.sidenav-fixed.right-aligned {
+    -webkit-transform: translateX(105%);
+            transform: translateX(105%);
+  }
+  .sidenav > a {
+    padding: 0 16px;
+  }
+  .sidenav .user-view {
+    padding: 16px 16px 0;
+  }
+}
+.sidenav .collapsible-body > ul:not(.collapsible) > li.active,
+  .sidenav.csidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active {
+    background-color: #ee6e73;
+  }
+  
+  .sidenav .collapsible-body > ul:not(.collapsible) > li.active a,
+  .sidenav.csidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active a {
+    color: #fff;
+  }
+
+.side300, .side320 {
+  width: 100%;
+  display: block;
+}
+@media only screen and (min-width: 601px)
+{
+  .side300 {
+    padding-left: 300px;
+  }
+  .side320 {
+    padding-left: 320px;
+  }
+}

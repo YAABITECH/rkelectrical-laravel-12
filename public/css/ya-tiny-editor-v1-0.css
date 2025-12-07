@@ -1,0 +1,12 @@
+img {
+    max-width: 100%;
+    height:auto;
+}
+iframe{
+    max-width: 100%;
+    height:auto;
+}
+i[class^="fa-"], i[class*=" fa-"] {
+    font-family: 'Font Awesome 6 Free', 'Font Awesome 6 Pro', 'FontAwesome';
+    font-weight: 900;
+}

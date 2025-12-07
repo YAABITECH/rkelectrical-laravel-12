@@ -1,0 +1,16 @@
+.tox-statusbar__branding, .tox-promotion
+{
+    display:none !important;
+    visibility: hidden !important;
+}
+.tox-editor-container {
+    width: 100%;
+    height: 100px;
+}
+.tox-statusbar {
+    display:none !important;
+    visibility: hidden !important;
+}
+.tox-edit-area {
+    padding: 20px !important;
+}

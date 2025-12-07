@@ -1,0 +1,134 @@
+@extends('layout.admin.structure')
+@section('xmt_tit', 'Edit Course | Admin')
+
+@push('headcss')
+<script src="{{URL::asset('/assets/tinymce/tinymce.min.js')}}" referrerpolicy="origin"></script>
+<style>
+    .tox-statusbar__branding, .tox-promotion-link
+    {
+        display:none;
+        visibility: hidden;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css">
+@endpush
+
+@section('content')
+<div class="container mt-3">
+    <h1 class="text-center text-primary fs-5 lh-lg">Course Edit</h1>
+    <div class="text-center m-1 mb-3">
+        <a class="btn btn-primary btn-sm" href="{{ route('admin.video.index') }}" role="button"><i class="fa-solid fa-list"></i></a>
+        <form action="{{ route('admin.video.destroy', $video->id) }}" method="post"
+            style="display: inline-block">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-danger btn-sm" type="submit"><i class="fa-solid fa-xmark"></i></button>
+        </form>
+        <a class="btn btn-primary btn-sm" href="{{ route('admin') }}" role="button"><i class="fa-solid fa-home"></i></a>
+    </div>
+    @if ($errors->any())
+        {!! implode('', $errors->all('<div class="alert alert-danger" role="alert">:message</div>')) !!}
+    @endif
+    <form method="post" action="{{ route('admin.video.update',$video->id) }}" enctype="multipart/form-data">
+        @csrf
+        @method('PATCH')
+        <p class="text-center">* fields are compulsory</p>
+        <div class="form-group py-3">
+            <label for="topic" class="form-label">Chapter Name *</label>
+            <input type="text" class="form-control" name="topic" id="topic" value="{{ old('topic',$video->topic) }}" required>
+        </div>
+        <div class="form-group py-3">
+            <label for="course" class="form-label">Select Course *</label>
+            <select name="course_id" id="course" class="form-select" data-live-search="true" required>
+                <option disabled selected>Select Course</option>
+                @foreach($courses as $course)
+                    <option value="{{ $course->id }}" {{ $course->id == old('course_id',$video->course_id) ? 'selected' : '' }}>{{ $course->title }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group py-3">
+            <label for="demo" class="form-label">Demo *</label>
+            <select name="demo" id="demo" class="form-select" data-live-search="true" required>
+                @php
+                    $demoArray = ['Yes' => '1', 'No' => '0'];
+                @endphp
+                @foreach($demoArray as $key => $value)
+                    <option value="{{ $value }}" {{ old('demo',$video->demo) == $value ? 'selected' : '' }}>{{ $key }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group py-3">
+            <label for="video" class="form-label">Video Link *</label>
+            <input type="text" class="form-control" name="video" id="video" value="{{ old('video',$video->video) }}" required>
+        </div>
+        <div class="form-group py-3">
+            <label for="description" class="form-label">Description *</label>
+            <textarea class="form-control" name="description" id="description" rows="3" required>{{ old('description',$video->description) }}</textarea>
+        </div>
+        <div class="form-group py-3">
+            <button type="submit" class="btn btn-block btn-primary">Update Course</button>
+        </div>
+    </form>
+<div>
+@endsection
+@push('endjs')
+<script>
+    var editor_config = {
+        selector: 'textarea#',
+        content_css: '/css/tinycustom.css',
+        path_absolute : "/",
+        Remove_Powered_By: true,
+        menubar: 'edit insert view format table',
+        plugins: 'advlist autolink lists link image charmap hr anchor searchreplace wordcount code fullscreen insertdatetime media save table contextmenu directionality paste textcolor colorpicker textpattern emoticons',
+        toolbar: 'undo redo | bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | fullscreen code emoticons',
+        relative_urls: false,
+        image_dimensions: false,
+        file_picker_callback : function(callback, value, meta) {
+            var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
+            var y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
+
+            var cmsURL = editor_config.path_absolute + 'admin/file-manager?editor=' + meta.fieldname;
+            if (meta.filetype == 'image') {
+                cmsURL = cmsURL + "&type=Images";
+            } else {
+                cmsURL = cmsURL + "&type=Files";
+            }
+
+            tinyMCE.activeEditor.windowManager.openUrl({
+                url : cmsURL,
+                title : 'Filemanager',
+                width : x * 0.8,
+                height : y * 0.8,
+                resizable : "yes",
+                close_previous : "no",
+                onMessage: (api, message) => {
+                callback(message.content);
+                }
+            });
+        },
+        setup: function (editor) {
+            editor.on('submit', function (e) {
+                var content = editor.getContent();
+                var regex = /<iframe(.*?)\s+src=["'](https?:\/\/(?:www\.)?youtube\.com\/embed\/([^\s"']+))["'](.*?)>\s*<\/iframe>/gi;
+                var modifiedContent = content.replace(regex, function(match, p1, p2, p3) {
+                    var title = 'YouTube video';
+                    var titleMatch = match.match(/title="([^"]+)"/i);
+                    if (titleMatch) {
+                        title = titleMatch[1];
+                    }
+                    return '<div class="ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/' + p3 + '" title="' + title + '" allowfullscreen></iframe></div>';
+                });
+                editor.setContent(modifiedContent);
+            });
+        }
+    };
+    tinymce.init(editor_config);
+</script>
+<script>
+    document.addEventListener('focusin', (e) => {
+        if (e.target.closest(".tox-tinymce, .tox-tinymce-aux, .moxman-window, .tam-assetmanager-root") !== null) {
+            e.stopImmediatePropagation();
+        }
+    });
+</script>
+@endpush
