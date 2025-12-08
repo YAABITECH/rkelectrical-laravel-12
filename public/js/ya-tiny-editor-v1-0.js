@@ -11,10 +11,51 @@ var editor_config = {
     menubar: 'edit insert view format table',
     plugins: 'advlist autolink lists link image charmap anchor searchreplace wordcount code fullscreen insertdatetime media save table directionality emoticons autoresize',
     toolbar: 'undo redo | bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | fullscreen emoticons code',
+    images_upload_url: '/admin/tinymce-upload',
+    automatic_uploads: true,
+    images_upload_base_path: '/files',
     relative_urls: false,
     image_dimensions: false,
     // extended_valid_elements: 'span[class|style]',
     // valid_children : "+span[tex],+script[type]",
+    // IMPORTANT: TinyMCE custom upload handler
+    images_upload_handler: function (blobInfo, progress) {
+        return new Promise(function (resolve, reject) {
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/admin/tinymce-upload');
+            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
+
+            xhr.upload.onprogress = function (e) {
+                progress(e.loaded / e.total * 100);
+            };
+
+            xhr.onload = function () {
+                if (xhr.status !== 200) {
+                    reject('HTTP Error: ' + xhr.status);
+                    return;
+                }
+
+                let json = JSON.parse(xhr.responseText);
+
+                if (!json || typeof json.location !== 'string') {
+                    reject('Invalid JSON: ' + xhr.responseText);
+                    return;
+                }
+
+                resolve(json.location);
+            };
+
+            xhr.onerror = function () {
+                reject('Image upload failed due to a XHR Transport error.');
+            };
+
+            let formData = new FormData();
+            formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+            xhr.send(formData);
+        });
+    },
     init_instance_callback: function(instance) {
         myeditor = instance;
         editorContainer = instance.editorContainer;

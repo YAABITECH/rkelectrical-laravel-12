@@ -3,7 +3,7 @@ return [
 
     'use_package_routes'       => true,
 
-    'middlewares'              => ['web','auth'],
+    'middlewares'              => ['AdminAuth'],
 
     'url_prefix'               => 'filemanager',
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\CourseVideoController;
 use App\Http\Controllers\CoursePackController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\PracticeSubjectController;
 use App\Http\Controllers\PracticeTopicController;
@@ -20,6 +21,9 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestExamController;
 use App\Http\Controllers\TestQuestionController;
 use App\Http\Controllers\TestSeriesController;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+
+// use UniSharp\LaravelFilemanager\Lfm;
 
 Route::get('/',[PageController::class,'home'])->name('home');
 Route::get('/about',[PageController::class,'about'])->name('about');
@@ -162,6 +166,8 @@ function generateRouteNames($prefix)
     ];
 }
 
-Route::group(['prefix' => '/admin/file-manager', 'middleware' => ['AdminAuth']], function () {
-     \UniSharp\LaravelFilemanager\Lfm::routes();
-});
+Route::post('/admin/tinymce-upload', [FileUploadController::class, 'upload'])->withoutMiddleware([VerifyCsrfToken::class]);;
+
+// Route::group(['prefix' => 'admin/file-manager', 'middleware' => ['web']], function () {
+//     Lfm::routes();
+// });
